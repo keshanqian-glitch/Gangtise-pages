@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>板块版一页通：人形机器人（概念板块）</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f8fa;
+      --paper: #ffffff;
+      --text: #20242a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --line-soft: #edf0f5;
+      --accent: #245bdb;
+      --accent-2: #0f8b8d;
+      --accent-soft: #eaf0ff;
+      --teal-soft: #e8f6f5;
+      --warm-soft: #fff6df;
+      --band: #f0f4f8;
+      --shadow: 0 18px 56px rgba(32, 36, 42, 0.10);
+    }
+    * { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.76 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .page {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 24px;
+      width: min(1480px, calc(100% - 48px));
+      margin: 28px auto 56px;
+      align-items: start;
+    }
+    main {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    h1 {
+      margin: 0;
+      padding: 32px 42px 24px;
+      font-size: 32px;
+      line-height: 1.25;
+      border-bottom: 3px solid var(--accent);
+      background: #fff;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 34px 42px 14px;
+      padding: 15px 18px;
+      font-size: 20px;
+      line-height: 1.35;
+      scroll-margin-top: 28px;
+      border-left: 5px solid var(--accent);
+      border-bottom: 1px solid var(--line-soft);
+      background: linear-gradient(90deg, var(--accent-soft), #fff);
+      color: #162033;
+    }
+    h3 {
+      margin: 20px 42px 10px;
+      font-size: 17px;
+      line-height: 1.45;
+      color: #26364f;
+    }
+    p, ul, ol {
+      margin: 10px 42px;
+    }
+    ul, ol {
+      padding-left: 26px;
+    }
+    li {
+      margin: 5px 0;
+    }
+    hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 22px 42px;
+    }
+    strong {
+      color: #162033;
+      font-weight: 700;
+    }
+    .toc {
+      position: sticky;
+      top: 24px;
+      max-height: calc(100vh - 48px);
+      overflow: auto;
+      padding: 16px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(32, 36, 42, 0.06);
+    }
+    .toc-inner {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .toc a {
+      display: inline-flex;
+      align-items: center;
+      width: 100%;
+      min-height: 34px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfe;
+      color: #26364f;
+      font-size: 13px;
+      line-height: 1.35;
+      text-decoration: none;
+    }
+    .toc a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .table-wrap {
+      margin: 14px 42px 24px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+    .leader-method {
+      margin: 12px 42px 18px;
+      padding: 12px 14px;
+      border: 1px solid #cfe7e4;
+      border-left: 4px solid var(--accent-2);
+      border-radius: 8px;
+      background: var(--teal-soft);
+      color: #1b4f52;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .cover {
+      position: relative;
+      margin: 0;
+      aspect-ratio: 21 / 9;
+      overflow: hidden;
+      background: #d9dee7;
+      border-bottom: 1px solid var(--line);
+    }
+    .cover img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .cover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.20));
+      pointer-events: none;
+    }
+    .cover figcaption {
+      position: absolute;
+      right: 14px;
+      bottom: 10px;
+      z-index: 1;
+      color: rgba(255,255,255,0.88);
+      font-size: 12px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.55);
+    }
+    .cover a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .cover a:hover {
+      text-decoration: underline;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: break-word;
+    }
+    th {
+      background: #eef3f8;
+      font-weight: 700;
+      white-space: nowrap;
+      color: #172033;
+    }
+    tr:nth-child(even) td {
+      background: #fbfcfe;
+    }
+    h3 + ul {
+      margin-top: 8px;
+      margin-bottom: 22px;
+      padding: 12px 18px 12px 34px;
+      border-left: 3px solid var(--accent-2);
+      background: #fbfdfd;
+    }
+    .base-info-table {
+      min-width: 0;
+      table-layout: fixed;
+    }
+    .base-info-table th:first-child,
+    .base-info-table td:first-child {
+      width: 28%;
+      white-space: nowrap;
+    }
+    .prosperity-table {
+      table-layout: fixed;
+      min-width: 960px;
+    }
+    .prosperity-table th:nth-child(1),
+    .prosperity-table td:nth-child(1) {
+      width: 11%;
+    }
+    .prosperity-table th:nth-child(2),
+    .prosperity-table td:nth-child(2) {
+      width: 13%;
+    }
+    .prosperity-table th:nth-child(3),
+    .prosperity-table td:nth-child(3) {
+      width: 26%;
+    }
+    .prosperity-table th:nth-child(4),
+    .prosperity-table td:nth-child(4) {
+      width: 10%;
+    }
+    .prosperity-table th:nth-child(5),
+    .prosperity-table td:nth-child(5) {
+      width: 40%;
+    }
+    .line-break-cell {
+      line-height: 1.65;
+    }
+    .cell-line {
+      display: block;
+    }
+    .cell-line + .cell-line {
+      margin-top: 4px;
+    }
+    .leader-table {
+      table-layout: fixed;
+      min-width: 880px;
+    }
+    .leader-table th:nth-child(1),
+    .leader-table td:nth-child(1) {
+      width: 20%;
+    }
+    .leader-table th:nth-child(2),
+    .leader-table td:nth-child(2) {
+      width: 28%;
+    }
+    .leader-table th:nth-child(3),
+    .leader-table td:nth-child(3) {
+      width: 52%;
+    }
+    .leader-name {
+      color: #162033;
+      font-weight: 700;
+    }
+    .leader-table td:nth-child(3) {
+      line-height: 1.65;
+    }
+    code {
+      background: var(--accent-soft);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    @media (max-width: 720px) {
+      body { background: #fff; font-size: 14px; line-height: 1.72; overflow-x: hidden; }
+      .page { display: block; width: 100%; margin: 0; }
+      main { width: 100%; margin: 0; border: 0; box-shadow: none; }
+      h1 { font-size: 22px; padding: 22px 16px 16px; overflow-wrap: anywhere; }
+      h2 { margin: 26px 16px 12px; padding: 12px 12px; font-size: 18px; scroll-margin-top: 72px; }
+      h3 { margin: 18px 16px 8px; font-size: 16px; }
+      p, ul, ol, hr, .leader-method { margin-left: 16px; margin-right: 16px; }
+      ul, ol { padding-left: 22px; }
+      .toc {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        max-height: none;
+        margin: 0;
+        padding: 10px 12px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        border-radius: 0;
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: 0 8px 22px rgba(32, 36, 42, 0.08);
+        -webkit-overflow-scrolling: touch;
+      }
+      .toc-inner { display: flex; flex-wrap: nowrap; gap: 8px; width: max-content; min-width: 100%; }
+      .toc a {
+        flex: 0 0 auto;
+        width: auto;
+        min-height: 32px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      .table-wrap {
+        width: calc(100% - 32px);
+        max-width: calc(100vw - 32px);
+        margin: 12px 16px 20px;
+        border-radius: 6px;
+        -webkit-overflow-scrolling: touch;
+      }
+      table { min-width: 640px; font-size: 13px; }
+      th, td { padding: 9px 10px; }
+      .base-info-table { min-width: 100%; font-size: 13.5px; }
+      .base-info-table th:first-child,
+      .base-info-table td:first-child { width: 34%; }
+      .prosperity-table { min-width: 760px; }
+      .leader-table { min-width: 740px; }
+      .leader-method { padding: 11px 12px; font-size: 13px; }
+      .cover figcaption { right: 10px; bottom: 7px; font-size: 10px; }
+    }
+    @media (max-width: 420px) {
+      h1 { font-size: 21px; }
+      h2 { font-size: 17px; }
+      table { min-width: 600px; }
+      .prosperity-table { min-width: 720px; }
+      .leader-table { min-width: 700px; }
+    }
+    @media print {
+      body { background: #fff; }
+      main { width: 100%; margin: 0; border: 0; box-shadow: none; }
+      h2 { break-after: avoid; }
+      .toc { display: none; }
+      .table-wrap { overflow: visible; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="toc" aria-label="模块导航">
+      <ul class="toc-inner">
+        <li><a href="#module-1">1. 基础信息与概念边界</a></li>
+        <li><a href="#module-2">2. 核心结论</a></li>
+        <li><a href="#module-3">3. 板块景气度与关键指标</a></li>
+        <li><a href="#module-4">4. 短期逻辑</a></li>
+        <li><a href="#module-5">5. 长期逻辑（2-3y）</a></li>
+        <li><a href="#module-6">6. 板块龙头</a></li>
+        <li><a href="#module-7">7. 近期要闻</a></li>
+        <li><a href="#module-8">8. 主要风险</a></li>
+        <li><a href="#module-9">9. 重点调研问题</a></li>
+      </ul>
+    </nav>
+    <main>
+    <figure class="cover">
+      <img src="https://images.unsplash.com/photo-1767716134775-6787d0def70c?auto=format&amp;fit=crop&amp;w=2400&amp;q=80" alt="橙色人形机器人" loading="eager">
+      <figcaption>图片来源：<a href="https://unsplash.com/photos/an-orange-robot-with-a-friendly-face-D8QF71s-NNM" target="_blank" rel="noopener">Enchanted Tools / Unsplash</a></figcaption>
+    </figure>
+    <h1>板块版一页通：人形机器人（概念板块）</h1>
+    <h2 id="module-1">1. 基础信息与概念边界</h2>
+    <div class="table-wrap">
+      <table class="base-info-table">
+        <thead><tr><th>字段</th><th>内容</th></tr></thead>
+        <tbody>
+        <tr><td>板块名称</td><td>人形机器人</td></tr>
+        <tr><td>概念体系</td><td>东财概念</td></tr>
+        <tr><td>概念定义</td><td>涉及人形机器人研发、生产、应用及相关核心零部件的A股上市公司集合，涵盖主机厂、减速器、传感器、控制系统等产业链环节</td></tr>
+        <tr><td>生成日期</td><td>2026-05-11</td></tr>
+        <tr><td>数据截至日期</td><td>2026-05-11</td></tr>
+        <tr><td>成分股数量</td><td>239家</td></tr>
+        <tr><td>主要子方向</td><td>执行器、电机、减速器、传感器、精密结构件、控制系统等</td></tr>
+        <tr><td>主要行业分布</td><td>精密制造、汽车零部件、电子元件、新材料等</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2 id="module-2">2. 核心结论</h2>
+    <p>人形机器人板块当前处于<strong>主题活跃但基本面证据不足</strong>的阶段，主要受事件与资金驱动，短期催化密集但长期逻辑依赖量产落地。以下从六个维度展开分析：</p>
+    <hr>
+    <p><strong>一、景气阶段</strong> 板块处于从“0到1”向“1到100”规模化跨越的关键期，产业链从样机验证迈入订单兑现初期，但多数企业机器人业务仍处培育阶段，未大规模放量。</p>
+    <hr>
+    <p><strong>二、驱动性质</strong> 当前判断更偏<strong>事件与资金驱动</strong>：政策催化（如中试基地落地）和特斯拉量产预期主导情绪，资金交投活跃（如机器人ETF单日成交额破7亿），但基本面业绩分化显著。</p>
+    <hr>
+    <p><strong>三、短期催化</strong></p>
+    <ol>
+      <li><strong>特斯拉Optimus V3进展</strong>：预计年中亮相，2026年7-8月启动投产，规划年产能100万台。</li>
+      <li><strong>国产生态突破</strong>：宇树科技开放动作应用商店，头部企业量产节奏从“千台级”向“万台级”跃迁。</li>
+    </ol>
+    <hr>
+    <p><strong>四、长期逻辑（2-3y）</strong> 依赖<strong>成本控制与技术迭代</strong>：国内企业已将整机成本从百万级下探至十万级，但需解决应用场景拓展和商业化模式可持续性。</p>
+    <hr>
+    <p><strong>五、估值与交易状态</strong></p>
+    <ol>
+      <li><strong>估值高位</strong>：核心标的3年市盈率历史百分位多超90%（如立讯精密98.76%、东山精密98.34%），显示估值处于历史高位。</li>
+      <li><strong>交易热度高</strong>：板块指数周涨幅达7.03%，成交额维持高位，但拥挤度仍处历史低位分位。</li>
+    </ol>
+    <hr>
+    <p><strong>六、后续验证指标</strong></p>
+    <ol>
+      <li><strong>订单兑现</strong>：关注企业从试点项目转向可持续订单的能力。</li>
+      <li><strong>量产进度</strong>：特斯拉及国产企业投产节奏与成本优化数据。</li>
+      <li><strong>业绩分化</strong>：核心技术企业（如减速器、传感器）的利润兑现情况。</li>
+    </ol>
+    <h2 id="module-3">3. 板块景气度与关键指标</h2>
+    <div class="table-wrap">
+      <table class="prosperity-table">
+        <thead><tr><th>维度</th><th>当前状态</th><th>关键指标</th><th>趋势</th><th>判断依据</th></tr></thead>
+        <tbody>
+        <tr><td><strong>需求</strong></td><td>活跃</td><td class="line-break-cell"><span class="cell-line">1. 区间成交额（2026-02-10至2026-05-11）：7.167万亿元</span><span class="cell-line">2. 日均成交额（2026-05-11）：2401亿元</span><span class="cell-line">3. 涨跌幅（2026-05-11）：1.448%</span></td><td>上行</td><td class="line-break-cell"><span class="cell-line">1. 成交额持续攀升，反映市场参与热情高涨</span><span class="cell-line">2. 板块指数连续5日上涨，创近3个半月新高</span><span class="cell-line">3. 特斯拉Optimus量产预期强化需求预期</span></td></tr>
+        <tr><td><strong>供给</strong></td><td>扩张中</td><td class="line-break-cell"><span class="cell-line">1. 成分股数量：239家（2026-05-08）</span><span class="cell-line">2. 总市值（2026-05-11）：6.3万亿元</span><span class="cell-line">3. 流通市值（2026-05-11）：5.248万亿元</span></td><td>上行</td><td class="line-break-cell"><span class="cell-line">1. 成分股数量稳定，产业链企业加速布局</span><span class="cell-line">2. 宇树科技等头部企业IPO推进，产能扩张加速</span><span class="cell-line">3. 特斯拉加州工厂计划2026年7-8月量产，设计年产能100万台</span></td></tr>
+        <tr><td><strong>价格</strong></td><td>高估</td><td class="line-break-cell"><span class="cell-line">1. 市盈率PE(整体法)（2026-05-11）：48.53倍</span><span class="cell-line">2. 市净率PB(整体法)（2026-05-11）：4.071倍</span><span class="cell-line">3. 3年市盈率历史百分位（2026-05-11）：70.32%</span></td><td>上行</td><td class="line-break-cell"><span class="cell-line">1. 估值百分位持续攀升，PB百分位达85.88%（近3年高位）</span><span class="cell-line">2. 市现率PCF(TTM,经营现金流)百分位97.98%，显示现金流压力</span><span class="cell-line">3. 板块热度推升估值，但业绩兑现尚需时间</span></td></tr>
+        <tr><td><strong>盈利</strong></td><td>分化</td><td class="line-break-cell"><span class="cell-line">1. 市现率PCF(整体法)（2026-05-11）：-104.8倍</span><span class="cell-line">2. 主力净流入资金（2026-05-11）：6.243亿元</span><span class="cell-line">3. 上涨家数（2026-05-11）：120家 vs 下跌家数117家</span></td><td>无法判断</td><td class="line-break-cell"><span class="cell-line">1. 负市现率反映整体盈利承压，但资金面分化</span><span class="cell-line">2. 核心技术企业（如减速器、传感器）业绩兑现，传统制造业务拖累</span><span class="cell-line">3. 2025年人形机器人收入占比仍低，处于培育期</span></td></tr>
+        <tr><td><strong>预期</strong></td><td>乐观</td><td class="line-break-cell"><span class="cell-line">1. 2026年中国人形机器人出货量预测：6.25万台</span><span class="cell-line">2. 2035年全球销量预测：600万台</span><span class="cell-line">3. 板块本周涨跌幅：1.547%</span></td><td>上行</td><td class="line-break-cell"><span class="cell-line">1. 量产元年（2025）后，2026年进入&quot;进阶之年&quot;，场景落地加速</span><span class="cell-line">2. 特斯拉Optimus Gen3年中亮相，催化产业链预期</span><span class="cell-line">3. 资本向AI/软件及核心零部件集中，长期空间明确</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    <p><strong>本板块最重要的3个跟踪指标</strong></p>
+    <ol>
+      <li><strong>量产进度</strong>：特斯拉Optimus及国产厂商（宇树科技等）的量产时间表与订单落地情况。</li>
+      <li><strong>估值百分位</strong>：3年市盈率/市净率历史百分位，监控泡沫风险。</li>
+      <li><strong>资金流向</strong>：主力净流入与超大单净额，反映机构态度。</li>
+    </ol>
+    <h2 id="module-4">4. 短期逻辑</h2>
+    <h3>1. 特斯拉Optimus V3量产订单落地，产业链进入基本面兑现期</h3>
+    <ul>
+      <li><strong>事件或变化</strong>：特斯拉Optimus V3预计2026年7-8月启动量产，供应链已下达Q2正式采购订单（PO），对应组装产线试生产备料需求。</li>
+      <li><strong>影响机制</strong>：量产订单从送样验证转向正式采购，标志着产业从主题投资切换至基本面驱动，核心比拼企业交付能力、良率爬坡与成本管控。</li>
+      <li><strong>受益子方向或公司类型</strong>：核心零部件供应商（如减速器、伺服电机、传感器）及具备量产交付能力的组装厂商。</li>
+      <li><strong>验证指标</strong>：订单规模、良率爬坡进度、单机价值量兑现情况。</li>
+    </ul>
+    <h3>2. 国产链资本化与量产共振，重点验证收入利润兑现标的</h3>
+    <ul>
+      <li><strong>事件或变化</strong>：国产人形机器人企业加速IPO进程，产业链配套完善，政策催化（如工信部2026年标准化指南）强化产业预期。</li>
+      <li><strong>影响机制</strong>：资本化进程与量产落地共振，推动国产链企业从技术验证转向商业化，资金向盈利能力和规模化条件集中的趋势明显。</li>
+      <li><strong>受益子方向或公司类型</strong>：率先实现收入与利润兑现的国产链企业，尤其是具备跨场景通用能力的底层硬件环节（如关节模组、减速器）。</li>
+      <li><strong>验证指标</strong>：季度营收增速、毛利率改善、订单能见度。</li>
+    </ul>
+    <h3>3. 技术迭代与场景拓展驱动需求加速，传感器与软件模型环节受益</h3>
+    <ul>
+      <li><strong>事件或变化</strong>：大小脑模型快速迭代提升对高质量感知输入需求，军工与特种机器狗领域装备智能化需求释放。</li>
+      <li><strong>影响机制</strong>：技术迭代推动传感器、AI软件等上游环节需求加速，下游场景（如仓储物流、工业试验）拓展提升订单能见度。</li>
+      <li><strong>受益子方向或公司类型</strong>：传感器供应商（如力传感器、视觉传感器）、AI软件模型开发商。</li>
+      <li><strong>验证指标</strong>：传感器出货量、模型迭代频率、场景适配案例数量。</li>
+    </ul>
+    <h3>4. 交易热度催化板块轮动，但需警惕纯概念炒作风险（交易热度驱动）</h3>
+    <ul>
+      <li><strong>事件或变化</strong>：机器人板块交易活跃度提升，中证机器人指数周涨幅创逾一年新高，资金高低切换推动题材股轮动。</li>
+      <li><strong>影响机制</strong>：短期资金情绪驱动板块热度，但缺乏业绩支撑的纯概念标的易被资金抛弃，回调风险高。</li>
+      <li><strong>受益子方向或公司类型</strong>：具备核心技术和订单落地的标的（如绿的谐波、拓普集团），纯概念小票风险较高。</li>
+      <li><strong>验证指标</strong>：成交量变化、个股业绩兑现进度、资金流向。</li>
+    </ul>
+    <h2 id="module-5">5. 长期逻辑（2-3y）</h2>
+    <p>基于检索数据，人形机器人概念板块的长期逻辑聚焦于未来2-3年内可验证的兑现路径，包括量产订单落地、核心零部件需求释放、国产链商业化突破及AI模型迭代驱动。以下逻辑均基于产业进展、财务数据及研报分析，确保具体环节和验证指标明确。</p>
+    <hr>
+    <p><strong>一、量产订单落地驱动产业链业绩兑现</strong></p>
+    <ol>
+      <li><strong>逻辑本身</strong>：特斯拉等龙头厂商量产进程加速，2026年7月启动正式量产，带动供应链订单从试点转向规模化采购，核心零部件供应商率先受益。</li>
+      <li><strong>兑现路径</strong>：2026年Q2下达正式PO订单（如FAT组装产线需求），2026年7月量产启动，2027年产能爬坡至万台级，订单转化为收入。</li>
+      <li><strong>财务/产业结果</strong>：供应链企业收入增速提升（如2026年人形机器人相关收入占比超10%），毛利率改善（规模效应降本），市占率向头部集中。</li>
+      <li><strong>重点受益方向</strong>：核心零部件供应商（减速器、电机、传感器），如绿的谐波（谐波减速器）、安培龙（力传感器）。</li>
+      <li><strong>验证指标</strong>：季度订单公告、产能利用率（&gt;80%）、单机价值量（如减速器单机价值超5000元）。</li>
+    </ol>
+    <hr>
+    <p><strong>二、核心零部件需求加速释放</strong></p>
+    <ol>
+      <li><strong>逻辑本身</strong>：人形机器人自由度提升（高配机型达20+自由度），带动减速器、传感器等核心部件需求增长，技术壁垒高的环节优先兑现。</li>
+      <li><strong>兑现路径</strong>：2026-2027年，伴随出货量从千台级向万台级跨越（CAGR 83%），零部件需求同步增长，国产供应商通过送样验证切入供应链。</li>
+      <li><strong>财务/产业结果</strong>：零部件企业净利润增速超30%（如2026年一季报净利润同比增长率超140%），产品结构向高附加值升级（如灵巧手模组）。</li>
+      <li><strong>重点受益方向</strong>：减速器（谐波/行星）、传感器（力/视觉）、电机，如胜宏科技（印制电路板）、立讯精密（消费电子零部件）。</li>
+      <li><strong>验证指标</strong>：零部件出货量（年增速&gt;50%）、客户认证进度（如特斯拉供应链名单）、毛利率（&gt;25%）。</li>
+    </ol>
+    <hr>
+    <p><strong>三、国产链商业化突破与IPO催化</strong></p>
+    <ol>
+      <li><strong>逻辑本身</strong>：国产本体厂（如宇树）商业化领先，IPO提速带动产业链关注，技术验证后订单落地。</li>
+      <li><strong>兑现路径</strong>：2026年宇树等头部企业IPO，2027年实现盈利转正，人形机器人出货规模行业前列，带动上下游合作。</li>
+      <li><strong>财务/产业结果</strong>：本体厂收入增速超100%（如2026年一季报营业总收入同比增长率超140%），供应链企业市占率提升（国产份额超30%）。</li>
+      <li><strong>重点受益方向</strong>：国产本体厂及核心供应链，如东山精密（印制电路板）、长飞光纤（通信线缆）。</li>
+      <li><strong>验证指标</strong>：IPO进展（如招股书披露）、出货数据（年出货量超1000台）、盈利拐点（净利润转正）。</li>
+    </ol>
+    <hr>
+    <p><strong>四、AI模型迭代提升应用场景落地</strong></p>
+    <ol>
+      <li><strong>逻辑本身</strong>：具身智能模型（如WALL-B）快速迭代，提升机器人决策能力，推动家庭、工业场景应用落地。</li>
+      <li><strong>兑现路径</strong>：2026年5月模型部署至真实家庭场景，2027年工业场景（如仓储物流）渗透率提升，带动整机及软件需求。</li>
+      <li><strong>财务/产业结果</strong>：软件及整机企业收入结构优化（软件收入占比超20%），应用场景验证后订单增长（如AMR赛道）。</li>
+      <li><strong>重点受益方向</strong>：AI软件模型供应商、传感器产业链，如美的集团（家用电器集成AI）。</li>
+      <li><strong>验证指标</strong>：模型迭代版本（如WALL-B更新频率）、场景落地数量（家庭/工厂试点超100个）、软件收入增速（&gt;40%）。</li>
+    </ol>
+    <h2 id="module-6">6. 板块龙头</h2>
+    <p class="leader-method">本模块的 5 个龙头由 MX 基于“概念板块中，属于产业链中最正宗的5个龙头股是什么？它们的龙头定位和核心优势分别是什么？”生成；本地侧按产业链相关度、核心环节地位、龙头定位和核心优势进行结构化排版，不以规模或短期涨跌幅作为唯一排序依据。</p>
+    <div class="table-wrap">
+      <table class="leader-table">
+        <thead><tr><th>标的名称</th><th>龙头定位</th><th>核心优势</th></tr></thead>
+        <tbody>
+        <tr><td class="leader-name">三花智控</td><td>人形机器人执行器核心供应商，特斯拉Optimus产业链核心标的，专注于线性与旋转执行器模组。</td><td><span class="cell-line">技术壁垒：在热管理领域积累深厚，执行器产品集成度高，良率爬坡领先行业。</span><span class="cell-line">量产能力：已获特斯拉Q2正式PO订单，7月启动量产，单机价值量居产业链前列。</span></td></tr>
+        <tr><td class="leader-name">拓普集团</td><td>人形机器人关节模组龙头，覆盖旋转/线性执行器全产品线，特斯拉供应链核心企业。</td><td><span class="cell-line">产品矩阵：从行星滚柱丝杠到灵巧手传动零部件全覆盖，技术储备完整。</span><span class="cell-line">订单景气：2026Q1关节模组订单同比翻倍，德州工厂产能匹配特斯拉量产需求。</span></td></tr>
+        <tr><td class="leader-name">绿的谐波</td><td>谐波减速器国产龙头，人形机器人关节核心部件供应商，技术替代进口。</td><td><span class="cell-line">技术壁垒：谐波减速器精度与寿命达国际水平，打破日本垄断。</span><span class="cell-line">市场地位：国内市占率第一，切入特斯拉及国产本体厂（如宇树）供应链。</span></td></tr>
+        <tr><td class="leader-name">恒立液压</td><td>液压件龙头延伸至线性驱动器，人形机器人力量控制核心标的。</td><td><span class="cell-line">技术协同：液压技术迁移至线性驱动器，成本管控能力行业领先。</span><span class="cell-line">增长潜力：线性驱动器成为新增长极，匹配工业场景规模化需求。</span></td></tr>
+        <tr><td class="leader-name">兆威机电</td><td>微型传动系统龙头，专注灵巧手赛道，特斯拉Optimus V3核心供应商。</td><td><span class="cell-line">技术独特性：微型齿轮箱精度达微米级，适配灵巧手高精度操作。</span><span class="cell-line">量产确定性：已获特斯拉灵巧手订单，2026年产能释放加速。</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2 id="module-7">7. 近期要闻</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>日期</th><th>类型</th><th>事件</th><th>影响方向</th><th>影响判断</th></tr></thead>
+        <tbody>
+        <tr><td>2026-05-11</td><td>政策</td><td>工信部明确2026年发布人形机器人与具身智能综合标准化体系建设指南</td><td>利好</td><td>推动技术攻关与企业培育，强化产业链规范化，利好基本面（技术迭代与商业化落地）</td></tr>
+        <tr><td>2026-05-11</td><td>行业数据</td><td>特斯拉Optimus V3预计2026年7-8月启动量产，国内头部厂商万台级订单落地</td><td>利好</td><td>量产节点明确，订单放量推动业绩兑现，利好盈利预测与估值（核心零部件供应链受益）</td></tr>
+        <tr><td>2026-05-11</td><td>并购融资</td><td>星动纪元完成超2亿美元融资，阶跃星辰获近25亿美元融资</td><td>利好</td><td>资本注入加速技术研发与场景拓展，利好估值（技术壁垒提升）与交易情绪（市场热度升温）</td></tr>
+        <tr><td>2026-05-11</td><td>技术进展</td><td>宇树科技开放全球首个人形机器人任务动作应用商店UniStore</td><td>利好</td><td>构建共享应用生态，推动场景落地，利好基本面（商业化进程加速）</td></tr>
+        <tr><td>2026-05-11</td><td>概念事件</td><td>国家电网68亿元采购人形机器人用于工业与特殊作业场景</td><td>利好</td><td>大额订单验证需求，利好盈利预测（整机与零部件企业业绩拐点）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    <p><strong>说明</strong>：</p>
+    <ol>
+      <li><strong>时间范围</strong>：所有事件均发生于2026年5月11日（最近30天内），符合时效性要求。</li>
+      <li><strong>影响机制</strong>：</li>
+    </ol>
+    <ul>
+      <li>政策与标准化建设直接推动产业规范化，降低技术迭代风险。</li>
+      <li>量产与订单落地验证商业化可行性，核心零部件企业（如减速器、伺服电机）受益显著。</li>
+      <li>融资与技术进展强化产业链竞争力，但需关注业绩兑现进度（部分标的仍处题材炒作阶段）。</li>
+    </ul>
+    <ol>
+      <li><strong>优先级</strong>：优先选取政策、量产、融资等对基本面影响直接的事件，排除纯情绪驱动信息（如股价波动）。</li>
+    </ol>
+    <h2 id="module-8">8. 主要风险</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>核心假设</th><th>对应风险</th><th>证伪指标</th></tr></thead>
+        <tbody>
+        <tr><td>板块处于从“0到1”向“1到100”规模化跨越的关键期</td><td>规模化量产进度不及预期</td><td>量产时间表推迟或量产数量未达预期</td></tr>
+        <tr><td>产业链从样机验证迈入订单兑现初期</td><td>订单兑现速度慢于预期</td><td>订单转化率低于行业平均水平</td></tr>
+        <tr><td>多数企业机器人业务仍处培育阶段，未大规模放量</td><td>业绩增长不及预期</td><td>财报显示机器人业务收入或利润增速低于市场预期</td></tr>
+        <tr><td>板块当前处于主题活跃但基本面证据不足的阶段</td><td>概念热度退潮但业绩未兑现</td><td>市场关注度下降，但企业业绩未见明显改善</td></tr>
+        <tr><td>短期催化密集但长期逻辑依赖量产落地</td><td>技术突破或商业化进展低于预期</td><td>关键技术指标未达预期，或商业化进程受阻</td></tr>
+        <tr><td>主要受事件与资金驱动</td><td>资金面收紧影响板块表现</td><td>资金流入量减少，板块整体估值回调</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2 id="module-9">9. 重点调研问题</h2>
+    <ol>
+      <li><strong>上涨驱动性质</strong>：近期人形机器人板块的上涨，主要由哪些具体事件或技术突破驱动？这些驱动因素是否具有持续性？</li>
+      <li><strong>业绩兑现路径</strong>：人形机器人板块内上市公司，预计在哪个财务报告期开始显著体现业绩增长？增长的主要来源是哪些业务？</li>
+      <li><strong>核心指标验证</strong>：哪些关键性能指标（如成本、精度、稳定性）的改善，最能反映人形机器人技术的成熟度？这些指标当前的行业平均水平是多少？</li>
+      <li><strong>估值和交易热度</strong>：人形机器人板块当前的平均市盈率与历史平均水平相比如何？板块内哪些公司的交易量和换手率异常，可能预示着资金流入或流出？</li>
+      <li><strong>概念相关业务收入贡献</strong>：人形机器人板块内，哪些公司的核心业务收入中，人形机器人相关业务的占比最高？这些业务的收入增长率如何？</li>
+    </ol>
+    </main>
+  </div>
+</body>
+</html>
